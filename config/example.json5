@@ -1,0 +1,46 @@
+{
+    bulbs: {
+        discoverAddress: '192.168.2.255', // Broadcast address to search for the bulbs
+        bulbAddresses: ['192.168.2.95'], // Addresses of the bulbs to be used
+        updateInterval: 30, // Intervals between sending updates to bulbs in ms
+    },
+    /*
+        Screenshots are used to calculate the average color and the luminance of the screen.
+    */
+    screenshot: {
+        enable: true,
+        xStart: 25, // Horizontal starting point of screen that will be included in the ss as percentage
+        xEnd: 75, // Horizontal ending point of screen that will be included in the ss as percentage
+        yStart: 25, // Vertical starting point of screen that will be included in the ss as percentage
+        yEnd: 75, // Vertical ending point of screen that will be included in the ss as percentage
+        interval: 100, // Intervals between taking screenshots in ms
+        maxLuminance: 1, // Between 0 and 1, multiplier of luminance value calculated from the average color of the screenshot
+    },
+    /*
+        Audio is used to increase bulbs' brightness on sound spikes. Takes the average of last n volume data to prevent jitteriness
+    */
+    audio: {
+        deviceId: 26, // Audio input device id, -1 for default input device
+        enable: true,
+        volumeAverageCount: 1, // Number of last volume data to calculate the volume average
+        maxLuminance: 0.6, // Between 0 and 1, multiplier of luminance value calculated from the average color of the screenshot
+    },
+    colors: {
+        luminance: {
+            // coefficients for rgb values to calculate luminance
+            r: 0.33,
+            g: 0.33,
+            b: 0.34,
+        },
+        bulbColor: {
+            // coefficients for rgb values to calculate bulb color
+            g: 1.2,
+            method: 'darken',
+            /* Bulb color calculation method after coefficients are applied. Doesn't affect luminance calculation
+                - simple: Simple average nothing is changed
+                - darken: Darkens the color by decreasing all values by half of the darkest color {r: 100, g: 150, b: 175} => {r: 50, g: 100, b: 125}
+                - brighten: Scales all values so that the brightest value becomes 255 {r: 100, g: 50, b: 25} => {r:255, g: 128, b: 63}
+            */
+        },
+    },
+}

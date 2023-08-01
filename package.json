@@ -1,0 +1,36 @@
+{
+    "name": "ambient-light",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/index.ts",
+    "dependencies": {
+        "json5": "^2.2.3",
+        "naudiodon": "^2.3.6",
+        "robotjs": "^0.6.0",
+        "vu-meter": "^0.1.0",
+        "wikari": "^0.1.0",
+        "yargs": "^17.7.2"
+    },
+    "scripts": {
+        "build": "rollup -c",
+        "start": "node dist/index.js",
+        "start:dev": "ts-node src/index.ts"
+    },
+    "author": "mykeskin@outlook.com",
+    "license": "ISC",
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^25.0.3",
+        "@rollup/plugin-json": "^6.0.0",
+        "@rollup/plugin-terser": "^0.4.3",
+        "@rollup/plugin-typescript": "^11.1.2",
+        "@types/config": "^3.3.0",
+        "@types/node": "^20.4.5",
+        "@types/yargs": "^17.0.24",
+        "builtin-modules": "^3.3.0",
+        "prettier": "^3.0.0",
+        "rollup": "^3.27.0",
+        "ts-node": "^10.9.1",
+        "tslib": "^2.6.1",
+        "typescript": "^5.1.6"
+    }
+}
