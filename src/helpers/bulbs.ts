@@ -38,11 +38,9 @@ export class Bulbs {
     }
 
     static async updateBulb(bulbs: BulbData[]) {
-        const { maxLuminance: audioMaxL } = Configs.get('audio');
-        const { maxLuminance: colorMaxL } = Configs.get('screenshot');
         await Promise.all(
             bulbs.map((data) => {
-                const dimming = Math.max(Math.min(data.lColor * colorMaxL + data.lSound * audioMaxL, 100), 10);
+                const dimming = Math.max(Math.min(data.lColor + data.lSound, 100), 10);
                 return data.bulb.sendRaw(
                     {
                         method: 'setPilot',

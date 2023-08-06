@@ -1,0 +1,45 @@
+{
+    bulbs: {
+        discoverAddress: '192.168.2.255',
+        bulbAddresses: ['192.168.2.95', '192.168.2.96'],
+        updateInterval: 30,
+    },
+    screenshot: [
+        {
+            enable: true,
+            xStart: 25,
+            xEnd: 75,
+            yStart: 0,
+            yEnd: 50, // Upper half
+            interval: 100,
+            maxLuminance: 1,
+            bulbs: [0], // '192.168.2.95'
+        },
+        {
+            enable: true,
+            xStart: 25,
+            xEnd: 75,
+            yStart: 50,
+            yEnd: 100, // Lower half
+            interval: 100,
+            maxLuminance: 1,
+            bulbs: [1], // '192.168.2.96'
+        },
+    ],
+    audio: {
+        deviceId: 26,
+        enable: true,
+        volumeAverageCount: 1,
+        maxLuminance: 0.6,
+    },
+    colors: {
+        luminance: {
+            r: 0.33,
+            g: 0.33,
+            b: 0.34,
+        },
+        bulbColor: {
+            method: 'saturate',
+        },
+    },
+}

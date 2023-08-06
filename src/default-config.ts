@@ -1,3 +1,9 @@
+type DefaultConfig = typeof config;
+export type Config = Omit<DefaultConfig, 'screenshot'> & {
+    screenshot: DefaultConfig['screenshot'] | DefaultConfig['screenshot'][];
+};
+export type ScreenConfig = DefaultConfig['screenshot'];
+
 const config = {
     bulbs: {
         discoverAddress: '192.168.1.255',
@@ -12,6 +18,7 @@ const config = {
         yEnd: 100,
         interval: 100,
         maxLuminance: 0.6,
+        bulbs: undefined as undefined | number[], // Indices of bulbs that will be affected by this screenshot config. undefined for all bulbs
     },
     audio: {
         deviceId: -1,
@@ -39,4 +46,4 @@ const config = {
     },
 };
 
-export default config;
+export default config as Config;

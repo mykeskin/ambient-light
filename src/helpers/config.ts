@@ -1,8 +1,6 @@
 import JSON5 from 'json5';
-import defaultConfig from '../default-config';
+import defaultConfig, { Config } from '../default-config';
 import fs from 'fs';
-
-export type Config = typeof defaultConfig;
 
 export class Configs {
     static config: Config;
@@ -22,7 +20,7 @@ export class Configs {
 function mergeObjects<T>(obj1: T, obj2?: Partial<T>): T {
     const newObj: any = {};
     for (const key in obj1) {
-        if (Array.isArray(obj1[key])) {
+        if (Array.isArray(obj1[key]) || (obj2 && Array.isArray(obj2[key]))) {
             newObj[key] = (obj2 && obj2[key]) || obj1[key];
         } else if (typeof obj1[key] === 'object') {
             newObj[key] = mergeObjects(obj1[key], obj2 && obj2[key]);

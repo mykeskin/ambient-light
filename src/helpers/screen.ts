@@ -1,23 +1,24 @@
 import robot from 'robotjs';
 import { Configs } from './config';
+import { ScreenConfig } from '../default-config';
 
 export class Screen {
-    static x: number;
-    static y: number;
-    static width: number;
-    static height: number;
-    static initializeScreen() {
-        const { xStart, xEnd, yStart, yEnd } = Configs.get('screenshot');
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    constructor(config: ScreenConfig) {
+        const { xStart, xEnd, yStart, yEnd } = config;
         const screenSize = robot.getScreenSize();
-        Screen.x = screenSize.width * (xStart / 100);
-        Screen.y = screenSize.height * (yStart / 100);
-        Screen.width = screenSize.width * (xEnd / 100) - Screen.x;
-        Screen.height = screenSize.height * (yEnd / 100) - Screen.y;
+        this.x = screenSize.width * (xStart / 100);
+        this.y = screenSize.height * (yStart / 100);
+        this.width = screenSize.width * (xEnd / 100) - this.x;
+        this.height = screenSize.height * (yEnd / 100) - this.y;
     }
 
-    static async getAverageScreenColor() {
+    async getAverageScreenColor() {
         const { bulbColor, luminance } = Configs.get('colors');
-        const img = robot.screen.capture(Screen.x, Screen.y, Screen.width, Screen.height);
+        const img = robot.screen.capture(this.x, this.y, this.width, this.height);
         let { r, g, b } = colorAverage(img.image);
         const l = Math.round((luminance.r * r + luminance.g * g + luminance.b * b) / 2.55);
         r = Math.round(r * bulbColor.r);

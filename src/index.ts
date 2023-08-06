@@ -41,8 +41,9 @@ async function printAudioDevices() {
 
 async function start() {
     const audioConfig = Configs.get('audio');
-    const screenshotConfig = Configs.get('screenshot');
+    let screenshotConfigs = Configs.get('screenshot');
     const bulbConfig = Configs.get('bulbs');
+    screenshotConfigs = Array.isArray(screenshotConfigs) ? screenshotConfigs : [screenshotConfigs];
 
     const bulbs = await Bulbs.getBulbs();
 
@@ -54,24 +55,28 @@ async function start() {
                 lastPeak = peak;
             }
             bulbs.forEach((data) => {
-                data.lSound = lastPeak;
+                data.lSound = lastPeak * audioConfig.maxLuminance;
             });
         });
     }
+    screenshotConfigs.forEach((screenshotConfig) => {
+        if (screenshotConfig.enable) {
+            const screen = new Screen(screenshotConfig);
+            const screenBulbs = bulbs.filter(
+                (_, index) => !screenshotConfig.bulbs || screenshotConfig.bulbs.includes(index)
+            );
+            asyncInterval(async () => {
+                const { r, g, b, l } = await screen.getAverageScreenColor();
 
-    if (screenshotConfig.enable) {
-        await Screen.initializeScreen();
-        asyncInterval(async () => {
-            const { r, g, b, l } = await Screen.getAverageScreenColor();
-
-            bulbs.forEach((data) => {
-                data.r = r;
-                data.g = g;
-                data.b = b;
-                data.lColor = l;
-            });
-        }, screenshotConfig.interval);
-    }
+                screenBulbs.forEach((data) => {
+                    data.r = r;
+                    data.g = g;
+                    data.b = b;
+                    data.lColor = l * screenshotConfig.maxLuminance;
+                });
+            }, screenshotConfig.interval);
+        }
+    });
 
     asyncInterval(async () => {
         logColor(bulbs[0]);
