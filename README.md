@@ -1,6 +1,6 @@
 # ambient-light
 
-Ambient lighting for Philips WiZ smart bulbs
+Ambient lighting for Philips WiZ smart bulbs using average screen color and audio output
 
 ## Usage
 
