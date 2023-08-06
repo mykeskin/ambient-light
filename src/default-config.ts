@@ -30,7 +30,11 @@ const config = {
             r: 1,
             g: 1,
             b: 1,
-            method: 'simple' as 'simple' | 'darken' | 'brighten',
+            method: 'simple' as 'simple' | 'darken' | 'brighten' | 'saturate',
+            saturate: {
+                saturationBase: 3, // Saturation magic number s = Math.min(1, hsv.s * (saturationBase - hsv.v))
+                valueBase: 2, // Value magic number v = Math.min(1, hsv.v * (valueBase - hsv.v))
+            },
         },
     },
 };

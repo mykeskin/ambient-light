@@ -34,12 +34,12 @@
         },
         bulbColor: {
             // coefficients for rgb values to calculate bulb color
-            g: 1.2,
-            method: 'darken',
+            method: 'saturate',
             /* Bulb color calculation method after coefficients are applied. Doesn't affect luminance calculation
                 - simple: Simple average nothing is changed
                 - darken: Darkens the color by decreasing all values by half of the darkest color {r: 100, g: 150, b: 175} => {r: 50, g: 100, b: 125}
                 - brighten: Scales all values so that the brightest value becomes 255 {r: 100, g: 50, b: 25} => {r:255, g: 128, b: 63}
+                - saturate: Increase color saturation { r: 94, g: 51, b: 67 } => { r: 153, g: 0, b: 57 }
             */
         },
     },
